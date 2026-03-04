@@ -74,7 +74,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <tr>
                 <th>Nama</th> <th>Jabatan</th> <th>Alamat</th> <th>Status</th> <th>Update</th>
             </tr>
-            <?php  
+            <?php
+            $batas = 5;
+				$halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
+				$halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
+ 
+				$previous = $halaman - 1;
+				$next = $halaman + 1;
+				
+				$data = mysqli_query($mysqli,"select * from karyawan");
+				$jumlah_data = mysqli_num_rows($data);
+				$total_halaman = ceil($jumlah_data / $batas);
+ 
+				$result = mysqli_query($mysqli,"select * from karyawan limit $halaman_awal, $batas");
+				$nomor = $halaman_awal+1;
             while($karyawan = mysqli_fetch_array($result)) {         
                 echo "<tr>";
                 echo "<td>".$karyawan['nama']."</td>";
@@ -85,6 +98,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
             ?>
             </table>
+            <nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item">
+					<a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
+				</li>
+				<?php 
+				for($x=1;$x<=$total_halaman;$x++){
+					?> 
+					<li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
+					<?php
+				}
+				?>				
+				<li class="page-item">
+					<a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
+				</li>
+			</ul>
+		</nav>
                 </div>
               </div>
             </div>
