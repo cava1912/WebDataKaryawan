@@ -1,5 +1,5 @@
 <?php
-require_once("connect/config.php");
+require_once("../connect/config.php");
 extract($_POST);
 
 if(isset($csv)){

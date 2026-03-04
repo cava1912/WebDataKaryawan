@@ -89,10 +89,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <br></br>
         <a href="crud/tambah_karyawan.php" class="btn btn-success">Tambah Karyawan</a>
         <br></br>
-        <form action="export-csv.php" method="post">
+        <form action="export/export-csv.php" method="post">
           <input type="submit" name="csv" class="btn btn-outline-info" value="Export to CSV"/>
         </form>
-        <form action="export-pdf.php" method="post">
+        <form action="export/export-pdf.php" method="post">
           <input type="submit" name="pdf" class="btn btn-outline-danger" value="Export to PDF"/>
         </form>
                 <div class="card">
