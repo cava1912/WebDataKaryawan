@@ -1,16 +1,13 @@
 <?php
  
-	// Check If form submitted, insert form data into users table.
 	if(isset($_POST['Submit'])) {
 		$name = $_POST['name'];
 		$jabatan = $_POST['jabatan'];
 		$alamat = $_POST['alamat'];
 		$status = $_POST['status'];
 		
-		// include database connection file
 		include_once("../connect/config.php");
 				
-		// Insert user data into table
 		$result = mysqli_query($mysqli, "INSERT INTO karyawan(nama,jabatan,alamat,statuss) VALUES('$name','$jabatan','$alamat','$status')");
 		
 		header("Location: ../index.php");
