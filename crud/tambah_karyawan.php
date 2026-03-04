@@ -1,40 +1,21 @@
 <?php
-// include database connection file
-include_once("config.php");
  
-// Check if form is submitted for user update, then redirect to homepage after update
-if(isset($_POST['update']))
-{	
-	$id = $_POST['id'];
-	
-	$name=$_POST['name'];
-	$jabatan=$_POST['jabatan'];
-	$alamat=$_POST['alamat'];
-	$status=$_POST['status'];
+	// Check If form submitted, insert form data into users table.
+	if(isset($_POST['Submit'])) {
+		$name = $_POST['name'];
+		$jabatan = $_POST['jabatan'];
+		$alamat = $_POST['alamat'];
+		$status = $_POST['status'];
 		
-	// update user data
-	$result = mysqli_query($mysqli, "UPDATE karyawan SET nama='$name',jabatan='$jabatan',alamat='$alamat',statuss='$status' WHERE id=$id");
-	
-	// Redirect to homepage to display updated user in list
-	header("Location: index.php");
-}
-?>
-<?php
-// Display selected user data based on id
-// Getting id from url
-$id = $_GET['id'];
- 
-// Fetech user data based on id
-$result = mysqli_query($mysqli, "SELECT * FROM karyawan WHERE id=$id");
- 
-while($karyawan = mysqli_fetch_array($result))
-{
-	$name = $karyawan['nama'];
-	$jabatan = $karyawan['jabatan'];
-	$alamat = $karyawan['alamat'];
-	$status = $karyawan['statuss'];
-}
-?>
+		// include database connection file
+		include_once("../connect/config.php");
+				
+		// Insert user data into table
+		$result = mysqli_query($mysqli, "INSERT INTO karyawan(nama,jabatan,alamat,statuss) VALUES('$name','$jabatan','$alamat','$status')");
+		
+		header("Location: ../index.php");
+	}
+	?>
 
 <!DOCTYPE html>
 <!--
@@ -45,14 +26,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edit Data Karyawan</title>
+  <title>Tambah Data Karyawan</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="app/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../app/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="app/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../app/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
@@ -60,8 +41,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <a href="../../index3.html" class="navbar-brand">
-        <span class="brand-text font-weight-light"><b><h2>Edit Data Karyawan</h2></b></span>
+      <a href="../index.php" class="navbar-brand">
+        <span class="brand-text font-weight-light"><b><h2>Tambah Data Karyawan</h2></b></span>
       </a>
   </nav>
   <!-- /.navbar -->
@@ -79,39 +60,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="row">
           <div class="col-lg-12">
             <!-- general form elements -->
-            <div class="card card-warning">
+            <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title text-white">Edit Karyawan</h3>
+                <h3 class="card-title">Tambah Karyawan</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="edit.php" method="post" name="form2">
+              <form action="tambah_karyawan.php" method="post" name="form1">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="name">Nama Karyawan</label>
-                    <input type="text" name="name" value="<?php echo $name;?>">
+                    <input type="text" class="form-control" name="name" placeholder="Nama" required>
                   </div>
                   <div class="form-group">
                     <label for="jabatan">Jabatan Karyawan</label>
-                    <input type="text" name="jabatan" value="<?php echo $jabatan;?>">
+                    <input type="text" class="form-control" name="jabatan" placeholder="Jabatan" required>
                   </div>
                   <div class="form-group">
                     <label for="alamat">Alamat Karyawan</label>
-                    <input type="text" name="alamat" value="<?php echo $alamat;?>">
+                    <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                   </div>
                   <div class="form-group">
                   <label for="Status">Status</label>
-                  <select class="custom-select form-control-border border-width-2" name="status">
-                    <option value="Aktif" <?php if($status=='Aktif') echo 'selected'; ?>>Aktif</option>
-  					<option value="Inaktif" <?php if($status=='Inaktif') echo 'selected'; ?>>Inaktif</option>
+                  <select class="custom-select form-control-border border-width-2" name="status" required>
+                    <option value="Aktif">Aktif</option>
+                    <option value="Inaktif">Inaktif</option>
                   </select>
                 </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-					<input type="hidden" name="id" value=<?php echo $_GET['id'];?>>
-                  <button type="submit" name="update" value="Update" class="btn btn-warning text-white">Submit</button>
-                  <a href="index.php" class="btn btn-warning text-white">Kembali</a>
+                  <button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+                  <a href="../index.php" class="btn btn-primary">Kembali</a>
                 </div>
               </form>
             </div>
@@ -142,28 +122,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </footer>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<?php
- 
-	// Check If form submitted, insert form data into users table.
-	if(isset($_POST['Submit'])) {
-		$name = $_POST['name'];
-		$jabatan = $_POST['jabatan'];
-		$alamat = $_POST['alamat'];
-		$status = $_POST['status'];
-		
-		// include database connection file
-		include_once("config.php");
-				
-		// Insert user data into table
-		$result = mysqli_query($mysqli, "INSERT INTO karyawan(nama,jabatan,alamat,statuss) VALUES('$name','$jabatan','$alamat','$status')");
-		
-		header("Location: index.php");
-        exit();
-	}
-	?>
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>

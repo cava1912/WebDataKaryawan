@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <a href="../../index3.html" class="navbar-brand">
+      <a href="index.php" class="navbar-brand">
         <span class="brand-text font-weight-light"><b><h2>Data Karyawan</h2></b></span>
       </a>
   </nav>
@@ -40,7 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container">
         <?php
         // Create database connection using config file
-        include_once("config.php");
+        include_once("connect/config.php");
  
         // Fetch all users data from database
         if(isset($_GET['keyword'])) {
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         </form>
         <br></br>
-        <a href="tambah_karyawan.php" class="btn btn-success">Tambah Karyawan</a><br/><br/>
+        <a href="crud/tambah_karyawan.php" class="btn btn-success">Tambah Karyawan</a><br/><br/>
                 <div class="card">
         <br/>
             <div class="card-body">
@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 echo "<td>".$karyawan['jabatan']."</td>";
                 echo "<td>".$karyawan['alamat']."</td>";
                 echo "<td>".$karyawan['statuss']."</td>";    
-                echo "<td><a href='edit.php?id=$karyawan[id].'class='btn btn-warning text-white'>Edit</a> | <a href='delete.php?id=$karyawan[id].'class='btn btn-danger'>Delete</a></td></tr>";        
+                echo "<td><a href='crud/edit.php?id=$karyawan[id].'class='btn btn-warning text-white'>Edit</a> | <a href='crud/delete.php?id=$karyawan[id].'class='btn btn-danger'>Delete</a></td></tr>";        
             }
             ?>
             </table>
